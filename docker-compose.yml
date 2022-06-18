@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:14.3-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    restart: on-failure
+    ports:
+      - '5432:5432'
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/blogapp/Dockerfile
+    container_name: blogapp
+    depends_on:
+      - database
+    volumes:
+      - ./:/var/www/blogapp/
+    env_file:
+      - .env
+    restart: on-failure
+    tty: true
+    ports:
+      - '8000:8000'
+
+volumes:
+  postgres_data:

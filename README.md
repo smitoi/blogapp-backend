@@ -17,5 +17,5 @@
         * [x] Article Editor ViewSet
     * [] Test cases
 * [] flake8 linting
-* [] Docker
+* [x] Docker
 * [] React

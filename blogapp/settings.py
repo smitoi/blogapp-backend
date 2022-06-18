@@ -9,22 +9,16 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
 from pathlib import Path
+from os import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+SECRET_KEY = environ.get('SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ban+#(pxa3kqu-53yk$+2w%c73^q56%*37in01=&w2q-47i2o1'
+DEBUG = environ.get('DEBUG').lower() == 'true'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -74,8 +68,12 @@ WSGI_APPLICATION = 'blogapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': environ.get('DATABASE_ENGINE'),
+        'NAME': environ.get('DATABASE_NAME'),
+        'USER': environ.get('DATABASE_USER'),
+        'PASSWORD': environ.get('DATABASE_PASSWORD'),
+        'HOST': environ.get('DATABASE_HOST', default='db'),
+        'PORT': environ.get('DATABASE_PORT', default=5432),
     }
 }
 
@@ -106,7 +104,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
