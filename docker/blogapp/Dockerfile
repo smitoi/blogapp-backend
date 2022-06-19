@@ -12,6 +12,7 @@ COPY . $WORKSPACE
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+RUN ["chmod", "+x", "/var/www/blogapp/docker/blogapp/entrypoint.sh"]
 CMD ["/var/www/blogapp/docker/blogapp/entrypoint.sh"]
 
 EXPOSE 8000

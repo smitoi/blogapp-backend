@@ -9,7 +9,10 @@ down:
 	docker-compose down
 
 flake8:
-	flake8 blogapp
+	docker exec -it blogapp flake8 blog blogapp
 
 ssh:
 	docker exec -it blogapp /bin/bash
+
+test:
+	docker exec -it blogapp python3 manage.py test
