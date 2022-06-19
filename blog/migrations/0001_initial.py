@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Writer',
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='writer_profile', serialize=False, to='auth.user')),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True,
+                                              related_name='writer_profile', serialize=False, to='auth.user')),
                 ('name', models.CharField(max_length=64)),
                 ('is_editor', models.BooleanField(default=True)),
             ],
@@ -27,10 +27,14 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=256)),
                 ('content', models.TextField()),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='draft', max_length=16)),
+                ('status',
+                 models.CharField(choices=[('draft', 'Draft'), ('approved', 'Approved'), ('rejected', 'Rejected')],
+                                  default='draft', max_length=16)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('edited_by', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='edited_articles', to='blog.writer')),
-                ('written_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='written_articles', to='blog.writer')),
+                ('edited_by', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                related_name='edited_articles', to='blog.writer')),
+                ('written_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 related_name='written_articles', to='blog.writer')),
             ],
         ),
     ]

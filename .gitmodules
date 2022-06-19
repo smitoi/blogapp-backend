@@ -1,0 +1,3 @@
+[submodule "blogapp-frontend"]
+	path = blogapp-frontend
+	url = https://github.com/smitoi/blogapp-frontend

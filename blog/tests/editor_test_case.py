@@ -22,13 +22,13 @@ class EditorTestCase(TestCase):
                            else Article.ArticleStatus.REJECTED)
 
     def test_editor_can_see_reviewed_articles(self):
-        response = self.client.get(f'/api/articles-edited/')
+        response = self.client.get('/api/articles-edited/')
         self.assertEqual(response.status_code, HTTP_200_OK)
         data = response.json()
         self.assertEqual(len(data), Article.objects.filter(edited_by=self.editor_profile).count())
 
     def test_editor_can_view_pending_articles(self):
-        response = self.client.get(f'/api/article-approval/')
+        response = self.client.get('/api/article-approval/')
         self.assertEqual(len(response.json()), Article.objects.filter(status=Article.ArticleStatus.DRAFT).count())
 
     def __change_status_test(self, status):

@@ -1,5 +1,4 @@
 import datetime
-import random
 
 import factory
 from django.conf import settings

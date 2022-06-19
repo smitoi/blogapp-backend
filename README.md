@@ -17,6 +17,6 @@ make up
         * [x] Article Writer ViewSet
         * [x] Article Editor ViewSet
     * [] Test cases
-* [] flake8 linting
+* [x] flake8 linting
 * [x] Docker
-* [] React
+* [x] React

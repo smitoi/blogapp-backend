@@ -1,10 +1,10 @@
 import random
 from django.test import TestCase
 
-from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN, HTTP_201_CREATED, HTTP_404_NOT_FOUND
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 from rest_framework.test import APIClient
 
-from blog.models import Writer, Article
+from blog.models import Article
 from blog.tests.factories import ArticleFactory, WriterProfileFactory
 
 
@@ -18,7 +18,7 @@ class WriterTestCase(TestCase):
 
     def test_writer_can_create_article(self):
         articlesCount = Article.objects.count()
-        response = self.client.post(f'/api/article/', {
+        response = self.client.post('/api/article/', {
             'title': 'Title test',
             'content': 'You can use the tearDown method. It will be called after your test is run. '
                        'You can delete all Blahs there.',

@@ -24,7 +24,7 @@ class DashboardTestCase(TestCase):
 
         client = APIClient()
         client.force_authenticate(user=writer_profile.user)
-        response = client.get(f'/api/writer/')
+        response = client.get('/api/writer/')
         self.assertEqual(response.status_code, HTTP_200_OK)
         data = response.json()
         self.assertEqual(len(data), len(Writer.objects.all()))
