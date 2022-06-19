@@ -9,7 +9,7 @@ class ArticleWriterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['title', 'content', 'status', 'written_by', 'edited_by', 'created_at', ]
+        fields = ['id', 'title', 'content', 'status', 'written_by', 'edited_by', 'created_at', ]
         read_only_fields = ['status', 'created_at', ]
 
 
@@ -18,5 +18,5 @@ class ArticleApprovalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['title', 'content', 'status', 'written_by', 'created_at', ]
+        fields = ['id', 'title', 'content', 'status', 'written_by', 'created_at', ]
         read_only_fields = ['title', 'content', 'created_at', ]

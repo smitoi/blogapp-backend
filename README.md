@@ -2,8 +2,9 @@
 
 ## Setup
 
-```commandline
-
+```shell
+make build
+make up
 ```
 
 ## Requirements

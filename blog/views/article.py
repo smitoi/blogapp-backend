@@ -1,35 +1,49 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.permissions import IsAuthenticated
+
 from blog.models import Article
-from blog.permissions import IsEditor
+from blog.permissions import IsEditor, IsWriter
 from blog.serializers import ArticleWriterSerializer, ArticleApprovalSerializer
 from django.db.models import Q
 
 
-class ArticleWriteViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+class ArticleWriteViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, IsWriter, ]
     queryset = Article.objects.all()
     serializer_class = ArticleWriterSerializer
     ordering = ('-created_at',)
 
+    def get_queryset(self):
+        if self.action == 'update':
+            return Article.objects.filter(~Q(status=Article.ArticleStatus.APPROVED)).all()
+
+        return self.queryset
+
     def perform_create(self, serializer):
         serializer.save(written_by=self.request.user.writer_profile)
 
+    def perform_update(self, serializer):
+        serializer.save(status=Article.ArticleStatus.DRAFT)
 
-class ArticleApproveViewSet(LoginRequiredMixin,
-                            viewsets.GenericViewSet,
-                            viewsets.mixins.ListModelMixin,
-                            viewsets.mixins.UpdateModelMixin):
-    permission_classes = [IsEditor]
+
+class ArticleApproveViewSet(mixins.ListModelMixin,
+                            mixins.UpdateModelMixin,
+                            viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated, IsEditor, ]
     queryset = Article.objects.filter(status=Article.ArticleStatus.DRAFT)
     serializer_class = ArticleApprovalSerializer
     ordering = ('-created_at',)
 
+    def perform_update(self, serializer):
+        serializer.save(edited_by=self.request.user.writer_profile)
 
-class ArticleEditedViewSet(LoginRequiredMixin,
-                           viewsets.GenericViewSet,
+
+class ArticleEditedViewSet(viewsets.GenericViewSet,
                            viewsets.mixins.ListModelMixin):
-    permission_classes = [IsEditor]
-    queryset = Article.objects.filter(~Q(status=Article.ArticleStatus.DRAFT))
+    permission_classes = [IsAuthenticated, ]
     serializer_class = ArticleApprovalSerializer
     ordering = ('-created_at',)
+
+    def get_queryset(self):
+        return Article.objects.filter(~Q(status=Article.ArticleStatus.DRAFT), edited_by=self.request.user.id)
