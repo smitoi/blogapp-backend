@@ -23,11 +23,15 @@ make up
 
 ### Dashboard
 <img src="screens/dashboard.png" alt="dashboard"/>
+
 ### Article Listing
 <img src="screens/listing.png" alt="listing"/>
+
 ### Article Creation
 <img src="screens/create.png" alt="create"/>
+
 ### Article Update
 <img src="screens/update.png" alt="update"/>
+
 ### Article Approval
 <img src="screens/edited.png" alt="edited"/>
