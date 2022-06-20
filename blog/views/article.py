@@ -18,7 +18,7 @@ class ArticleWriteViewSet(viewsets.ModelViewSet):
         if self.action == 'update':
             return Article.objects.filter(~Q(status=Article.ArticleStatus.APPROVED)).all()
 
-        return self.queryset
+        return super().get_queryset()
 
     def perform_create(self, serializer):
         serializer.save(written_by=self.request.user.writer_profile)
