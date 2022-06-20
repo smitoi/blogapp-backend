@@ -16,7 +16,7 @@ make up
         * [x] Dashboard
         * [x] Article Writer ViewSet
         * [x] Article Editor ViewSet
-    * [] Test cases
+    * [x] Test cases
 * [x] flake8 linting
 * [x] Docker
 * [x] React
